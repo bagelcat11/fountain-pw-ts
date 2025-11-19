@@ -10,7 +10,7 @@ export type FountainTypes = 'title_page' | 'scene_heading'
                 | 'italic_underline' | 'bold_italic'
                 | 'bold' | 'italic'
                 | 'underline' | 'escape'
-                | 'blank_lines';
+                | 'blank_lines' | 'sfx';
 
 export const rules: Record<FountainTypes, RegExp> = {
     title_page: /^\s*((?:title|credit|authors?|source|notes|draft ?date|date|contact|copyright|revisions?)\:)(?=[^\S\n]*(?:\n(?: {3,}|\t))?\S.*)/i,
@@ -49,5 +49,9 @@ export const rules: Record<FountainTypes, RegExp> = {
 
     escape: /\\([@#!*_$~`+=.><\\\/])/g,
 
-    blank_lines: /\n(?:(?! {2}\n)(?:[^\S\n]*| {3,}[^\S\n]*)(?:\n|$))+|^[^\S\n]*(?:\n|$)/g
+    blank_lines: /\n(?:(?! {2}\n)(?:[^\S\n]*| {3,}[^\S\n]*)(?:\n|$))+|^[^\S\n]*(?:\n|$)/g,
+
+    // adding my own rule for sfx like:
+    // @A loud meow in the distance@
+    sfx: /(?<!\\)\@(?!\@)(?=\S)(.+?(?<=[^\s*]))(?<!\\)\@/g,
 };
